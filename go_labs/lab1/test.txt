@@ -1,0 +1,7 @@
+Hello world
+This is a test file
+Go programming language
+Regular expressions are powerful
+Fuzzy matching is useful
+Another line with world
+Final line here
