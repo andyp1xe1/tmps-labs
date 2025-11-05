@@ -20,6 +20,7 @@ func main() {
 	pipeline, err := factory.NewPipelineBuilder().
 		WithInputPath("input_sample.csv").
 		WithOutputPath("output_final.yaml").
+		WithSaveIntermediarySteps().
 		WithIndent().
 		WithPrettyPrint().
 		AddCSVToJSON().

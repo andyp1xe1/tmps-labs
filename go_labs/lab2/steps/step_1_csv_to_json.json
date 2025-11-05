@@ -1,0 +1,50 @@
+[
+  {
+    "age": "28",
+    "city": "New York",
+    "name": "Alice Johnson",
+    "occupation": "Software Engineer"
+  },
+  {
+    "age": "35",
+    "city": "San Francisco",
+    "name": "Bob Smith",
+    "occupation": "Data Scientist  "
+  },
+  {
+    "age": "42",
+    "city": "Austin",
+    "name": "Carol Davis",
+    "occupation": "Product Manager"
+  },
+  {
+    "age": "31",
+    "city": "Seattle",
+    "name": "David Wilson",
+    "occupation": "DevOps Engineer"
+  },
+  {
+    "age": "29",
+    "city": "Boston",
+    "name": "Emma Brown",
+    "occupation": "UX Designer"
+  },
+  {
+    "age": "38",
+    "city": "Chicago",
+    "name": "Frank Garcia",
+    "occupation": "Backend Developer"
+  },
+  {
+    "age": "33",
+    "city": "Denver",
+    "name": "Grace Lee",
+    "occupation": "Frontend Developer"
+  },
+  {
+    "age": "27",
+    "city": "Portland",
+    "name": "Henry Chen",
+    "occupation": "Mobile Developer"
+  }
+]

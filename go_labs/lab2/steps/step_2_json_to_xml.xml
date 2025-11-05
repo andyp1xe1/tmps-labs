@@ -1,0 +1,50 @@
+<doc>
+  <root>
+    <age>28</age>
+    <city>New York</city>
+    <name>Alice Johnson</name>
+    <occupation>Software Engineer</occupation>
+  </root>
+  <root>
+    <age>35</age>
+    <city>San Francisco</city>
+    <name>Bob Smith</name>
+    <occupation>Data Scientist  </occupation>
+  </root>
+  <root>
+    <age>42</age>
+    <city>Austin</city>
+    <name>Carol Davis</name>
+    <occupation>Product Manager</occupation>
+  </root>
+  <root>
+    <age>31</age>
+    <city>Seattle</city>
+    <name>David Wilson</name>
+    <occupation>DevOps Engineer</occupation>
+  </root>
+  <root>
+    <age>29</age>
+    <city>Boston</city>
+    <name>Emma Brown</name>
+    <occupation>UX Designer</occupation>
+  </root>
+  <root>
+    <age>38</age>
+    <city>Chicago</city>
+    <name>Frank Garcia</name>
+    <occupation>Backend Developer</occupation>
+  </root>
+  <root>
+    <age>33</age>
+    <city>Denver</city>
+    <name>Grace Lee</name>
+    <occupation>Frontend Developer</occupation>
+  </root>
+  <root>
+    <age>27</age>
+    <city>Portland</city>
+    <name>Henry Chen</name>
+    <occupation>Mobile Developer</occupation>
+  </root>
+</doc>
