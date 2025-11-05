@@ -1,3 +1,6 @@
+// Package models defines the core interfaces and data structures for file format
+// conversion operations. It provides the foundation types used by the creational
+// design patterns implemented in the factory package.
 package models
 
 import "io"
@@ -23,7 +26,8 @@ type Converter interface {
 }
 
 type ConversionOptions struct {
-	Indent      bool
-	PrettyPrint bool
-	Headers     []string
+	Indent                bool
+	PrettyPrint           bool
+	Headers               []string
+	SaveIntermediarySteps bool
 }

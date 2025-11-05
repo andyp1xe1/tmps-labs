@@ -1,3 +1,6 @@
+// Package models defines the core interfaces and data structures for file format
+// conversion operations. It provides the foundation types used by the creational
+// design patterns implemented in the factory package.
 package models
 
 type Pipeline struct {
@@ -8,9 +11,8 @@ type Pipeline struct {
 }
 
 type ConversionStep struct {
-	From      FileFormat
-	To        FileFormat
-	Converter Converter
+	From FileFormat
+	To   FileFormat
 }
 
 type PipelineResult struct {

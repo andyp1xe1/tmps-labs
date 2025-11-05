@@ -1,114 +1,56 @@
+// Package main demonstrates creational design patterns through a file conversion pipeline.
+// It showcases Factory Method, Object Pool, and Builder patterns working together
+// to convert CSV data through JSON and XML formats to YAML output.
 package main
 
 import (
 	"fmt"
 	"log"
-	"strings"
+	"os"
 
 	"tmps-go-labs/lab2/domain/factory"
-	_ "tmps-go-labs/lab2/domain/factory" // Import to trigger init functions
-	"tmps-go-labs/lab2/domain/models"
 )
 
 func main() {
-	fmt.Println("File Converter - Creational Design Patterns Demo")
-	fmt.Println("================================================")
-
-	demonstrateFactoryMethod()
-	fmt.Println()
-	demonstrateBuilder()
-	fmt.Println()
-	demonstrateObjectPool()
-}
-
-func demonstrateFactoryMethod() {
-	fmt.Println("1. Factory Method Pattern Demo")
-	fmt.Println("------------------------------")
+	fmt.Println("Creational Design Patterns Demo: CSV → JSON → XML → YAML")
 
 	converterFactory := factory.NewConverterFactory()
-
-	converterTypes := []string{"csv-json", "json-xml", "xml-yaml", "json-csv"}
-
-	for _, converterType := range converterTypes {
-		converter, err := converterFactory.CreateConverter(converterType)
-		if err != nil {
-			log.Printf("Error creating %s converter: %v", converterType, err)
-			continue
-		}
-
-		fmt.Printf("✓ Created %s converter\n", converterType)
-
-		testData := strings.NewReader("name,age\nJohn,25\nJane,30")
-		result := converter.Convert(testData, models.FormatCSV, models.FormatJSON)
-
-		if result.Error != nil {
-			log.Printf("Conversion error: %v", result.Error)
-		} else {
-			fmt.Printf("  Sample output: %s\n", string(result.Data[:50])+"...")
-		}
-	}
-}
-
-func demonstrateBuilder() {
-	fmt.Println("2. Builder Pattern Demo")
-	fmt.Println("-----------------------")
+	pool := factory.NewConverterPool(5, converterFactory)
 
 	pipeline, err := factory.NewPipelineBuilder().
-		WithInputPath("/tmp/input.csv").
-		WithOutputPath("/tmp/output.yaml").
+		WithInputPath("input_sample.csv").
+		WithOutputPath("output_final.yaml").
 		WithIndent().
 		WithPrettyPrint().
-		WithHeaders([]string{"name", "age", "city"}).
 		AddCSVToJSON().
 		AddJSONToXML().
 		AddXMLToYAML().
 		Build()
-
 	if err != nil {
-		log.Printf("Error building pipeline: %v", err)
-		return
+		log.Fatalf("Pipeline build failed: %v", err)
 	}
 
-	fmt.Printf("✓ Built conversion pipeline with %d steps\n", len(pipeline.Steps))
-	fmt.Printf("  Input: %s\n", pipeline.InputPath)
-	fmt.Printf("  Output: %s\n", pipeline.OutputPath)
-	fmt.Printf("  Options: Indent=%v, PrettyPrint=%v\n",
-		pipeline.Options.Indent, pipeline.Options.PrettyPrint)
+	executor := factory.NewPipelineExecutor(pool)
+	result := executor.Execute(pipeline)
 
-	for i, step := range pipeline.Steps {
-		fmt.Printf("  Step %d: %s → %s\n", i+1, step.From, step.To)
+	if !result.Success {
+		log.Fatalf("Pipeline execution failed: %v", result.Error)
 	}
-}
 
-func demonstrateObjectPool() {
-	fmt.Println("3. Object Pool Pattern Demo")
-	fmt.Println("---------------------------")
+	if _, err := os.Stat(pipeline.OutputPath); err == nil {
+		fmt.Printf("Processed %d conversion steps in %d ms\n",
+			len(result.Results), result.Duration/1_000_000)
 
-	converterFactory := factory.NewConverterFactory()
-	pool := factory.NewConverterPool(3, converterFactory)
-
-	fmt.Printf("✓ Created converter pool with max size: 3\n")
-
-	converterTypes := []string{"csv-json", "json-xml", "xml-yaml", "csv-json"}
-
-	var converters []models.Converter
-
-	for i, converterType := range converterTypes {
-		converter, err := pool.Get(converterType)
-		if err != nil {
-			log.Printf("Error getting converter from pool: %v", err)
-			continue
+		for i, stepResult := range result.Results {
+			if stepResult.Error == nil {
+				fmt.Printf("  Step %d: %s → %s (%.1f KB)\n",
+					i+1,
+					pipeline.Steps[i].From,
+					pipeline.Steps[i].To,
+					float64(len(stepResult.Data))/1024)
+			}
 		}
-
-		converters = append(converters, converter)
-		fmt.Printf("  Got converter %d (%s), pool size: %d, created: %d\n",
-			i+1, converterType, pool.Size(), pool.Created())
+	} else {
+		log.Fatalf("Output file not created: %v", err)
 	}
-
-	for i, converter := range converters {
-		pool.Put(converter)
-		fmt.Printf("  Returned converter %d, pool size: %d\n", i+1, pool.Size())
-	}
-
-	fmt.Printf("✓ Pool demonstration complete, final pool size: %d\n", pool.Size())
 }
