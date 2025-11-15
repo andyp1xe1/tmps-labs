@@ -1,4 +1,4 @@
-# Lab 3: Structural Design Patterns - D&D Character Builder
+# Lab 2: Structural Design Patterns - D&D Character Builder
 
 ## Author: Student Name
 
