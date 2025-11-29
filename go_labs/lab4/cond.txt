@@ -1,0 +1,17 @@
+Third laboratory work for TMPS course with the topic "Behavioral Design Patterns."
+
+To implement in a project 3 behavioral design patterns from the following list:
+
+    Chain of Responsibility
+    Command
+    Interpreter (Good to know)
+    Iterator
+    Mediator
+    Memento
+    Observer
+    State
+    Strategy
+    Template Method
+    Visitor
+
+and to know the rest.
